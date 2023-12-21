@@ -16,26 +16,27 @@ public class Wall implements Structure {
 
     @Override
     public Optional<Block> findBlockByColor(String color) {
-        return blocks.stream()
-                .flatMap(this::getAllBlocks)
+        return getAllBlocksStream()
                 .filter(block -> block.getColor().equals(color))
                 .findFirst();
     }
 
     @Override
     public List<Block> findBlocksByMaterial(String material) {
-        return blocks.stream()
-                .flatMap(this::getAllBlocks)
+        return getAllBlocksStream()
                 .filter(block -> material.equals(block.getMaterial()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public int count() {
-        return blocks.stream()
-                .flatMap(this::getAllBlocks)
+        return getAllBlocksStream()
                 .mapToInt(block -> 1)
                 .sum();
+    }
+
+    private Stream<Block> getAllBlocksStream() {
+        return blocks.stream().flatMap(this::getAllBlocks);
     }
 
     private Stream<Block> getAllBlocks(Block block) {
