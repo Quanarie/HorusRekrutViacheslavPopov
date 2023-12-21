@@ -11,17 +11,25 @@ public class Main {
         String paperMaterial = "Paper";
 
         List<Block> blockList = new ArrayList<>();
-        blockList.add(new BlockImpl(redColor, paperMaterial));
-        blockList.add(new BlockImpl(redColor, brickMaterial));
-        blockList.add(new BlockImpl(redColor, paperMaterial));
+        blockList.add(new BlockImpl(blueColor, paperMaterial));
+        blockList.add(new BlockImpl(blueColor, brickMaterial));
+        blockList.add(new BlockImpl(blueColor, paperMaterial));
 
-        CompositeBlockImpl compositeBlock = new CompositeBlockImpl(redColor, paperMaterial, new ArrayList<>());
+        CompositeBlockImpl compositeBlock = new CompositeBlockImpl(blueColor, paperMaterial, new ArrayList<>());
         compositeBlock.getBlocks().add(new BlockImpl(blueColor, brickMaterial));
         compositeBlock.getBlocks().add(new BlockImpl(redColor, paperMaterial));
-        blockList.add(compositeBlock);
+
+        CompositeBlockImpl compositeBlock2 = new CompositeBlockImpl(blueColor, paperMaterial, new ArrayList<>());
+        compositeBlock2.getBlocks().add(compositeBlock);
+
+        blockList.add(compositeBlock2);
 
         Wall wall = new Wall(blockList);
 
-        System.out.println(wall.findBlockByColor(blueColor).get().getMaterial());
+        System.out.println(wall.count());
+
+        for (Block block : wall.findBlocksByMaterial(paperMaterial)) {
+            System.out.println(block.getColor() + " " + block.getMaterial());
+        }
     }
 }
